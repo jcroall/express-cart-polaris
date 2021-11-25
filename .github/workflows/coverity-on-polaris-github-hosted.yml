@@ -1,0 +1,29 @@
+name: Coverity on Polaris with GitHub Hosted Runner
+
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      POLARIS_URL: ${{ secrets.POLARIS_URL }}
+      POLARIS_ACCESS_TOKEN: ${{ secrets.POLARIS_ACCESS_TOKEN }}
+      SECURITY_GATE_ARGS: --new
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download and configure Polaris CLI
+        run: |
+          curl -LsS -o polaris.zip $POLARIS_URL/api/tools/polaris_cli-linux64.zip
+          unzip -j -d polaris-cli polaris.zip
+          ./polaris-cli/polaris --persist-config --co capture.build.buildCommands="null" --co capture.build.   cleanCommands="null" --co capture.fileSystem="null" --co capture.coverity.autoCapture="enable" --co            serverUrl=$POLARIS_URL configure
+
+      - name: Coverity Scan (Full analysis)
+        if: ${{github.event_name == 'push'}}
+        run: ./polaris-cli/polaris analyze -w
