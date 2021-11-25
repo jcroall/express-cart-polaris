@@ -27,3 +27,4 @@ jobs:
       - name: Coverity Scan (Full analysis)
         if: ${{github.event_name == 'push'}}
         run: ./polaris-cli/polaris analyze -w
+
