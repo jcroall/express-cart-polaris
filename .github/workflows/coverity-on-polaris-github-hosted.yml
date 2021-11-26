@@ -47,6 +47,7 @@ jobs:
         if: ${{ github.event_name == 'pull_request' && steps.changeset.outputs.added_modified != '' }}
         run: |
           export POLARIS_FF_ENABLE_COVERITY_INCREMENTAL=true
+          export CI_COMMIT_REF_NAME=GITHUB_REF
           echo ${{ steps.changeset.outputs.added_modified }} > change-set.txt
           echo Changed files...
           cat change-set.txt
