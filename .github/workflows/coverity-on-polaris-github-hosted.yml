@@ -14,9 +14,17 @@ jobs:
       POLARIS_URL: ${{ secrets.POLARIS_URL }}
       POLARIS_ACCESS_TOKEN: ${{ secrets.POLARIS_ACCESS_TOKEN }}
       SECURITY_GATE_ARGS: --new
+      SYNOPSYS_GITHUB_TOOLS_REPO: 
 
     steps:
       - uses: actions/checkout@v2
+      
+      - name: Cache Coverity on Polaris Downloads
+        id: synopsys-cache
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/.synopsys
+          key: synopsys-cache-ubuntu
 
       - name: Download and configure Polaris CLI
         run: |
@@ -24,7 +32,21 @@ jobs:
           unzip -j -d polaris-cli polaris.zip
           ./polaris-cli/polaris --persist-config --co capture.build.buildCommands="null" --co capture.build.cleanCommands="null" --co capture.fileSystem="null" --co capture.coverity.autoCapture="enable" --co            serverUrl=$POLARIS_URL configure
 
-      - name: Coverity Scan (Full analysis)
-        if: ${{github.event_name == 'push'}}
-        run: ./polaris-cli/polaris analyze -w
+      #- name: Coverity Scan (Full analysis)
+      #  if: ${{github.event_name == 'push'}}
+      #  run: ./polaris-cli/polaris analyze -w
 
+      - name: Get Synopsys GitHub Tools
+        run: git clone -q --depth 1 $SYNOPSYS_GITHUB_TOOLS_REPO
+
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+           languages: javascript
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
+
+      - name: Test SARIF
+        run: cat *sarif*
