@@ -49,4 +49,4 @@ jobs:
         uses: github/codeql-action/analyze@v1
 
       - name: Test SARIF
-        run: cat *sarif*
+        run: cat /home/runner/work/express-cart-polaris/results/javascript.sarif
