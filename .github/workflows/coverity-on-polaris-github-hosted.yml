@@ -27,9 +27,6 @@ jobs:
           path: /home/runner/.synopsys
           key: synopsys-cache-ubuntu
 
-      - run: git checkout HEAD^2
-        if: ${{ github.event_name == 'pull_request' }}
-
       - name: Download and configure Polaris CLI
         run: |
           curl -LsS -o polaris.zip $POLARIS_URL/api/tools/polaris_cli-linux64.zip
