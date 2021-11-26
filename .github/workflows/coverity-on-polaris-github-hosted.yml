@@ -36,8 +36,8 @@ jobs:
       #  if: ${{github.event_name == 'push'}}
       #  run: ./polaris-cli/polaris analyze -w
 
-      - name: Get Synopsys GitHub Tools
-        run: git clone -q --depth 1 $SYNOPSYS_GITHUB_TOOLS_REPO
+      #- name: Get Synopsys GitHub Tools
+      #  run: git clone -q --depth 1 $SYNOPSYS_GITHUB_TOOLS_REPO
 
 
       - name: Initialize CodeQL
