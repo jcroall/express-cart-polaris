@@ -50,7 +50,7 @@ jobs:
         run: |
           echo ${{ steps.changeset.outputs.added_modified }}
           readarray -t changed_files <<<"$(jq -r '.[]' <<<'${{ steps.changeset.outputs.added_modified }}')"
-          for changedd_file in ${changedd_files[@]}; do
+          for changed_file in ${changed_files[@]}; do
             echo ${changed_file} >> polaris-files-to-scan.txt
             echo "Scan changed file ${changed_file}."
           done
