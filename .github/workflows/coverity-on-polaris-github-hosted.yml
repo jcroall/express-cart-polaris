@@ -54,11 +54,9 @@ jobs:
             echo ${changed_file} >> polaris-files-to-scan.txt
             echo "Scan changed file ${changed_file}."
           done
-          echo Changed files...
-          cat polaris-files-to-scan.txt
-          #export POLARIS_FF_ENABLE_COVERITY_INCREMENTAL=true
-          #export CI_COMMIT_REF_NAME=GITHUB_REF
-          #./polaris-cli/polaris analyze -w --incremental polaris-files-to-scan.txt
+          export POLARIS_FF_ENABLE_COVERITY_INCREMENTAL=true
+          export CI_COMMIT_REF_NAME=GITHUB_REF
+          ./polaris-cli/polaris analyze -w --incremental polaris-files-to-scan.txt
 
       - name: Get Synopsys GitHub Tools
         run: |
