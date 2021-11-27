@@ -24,8 +24,8 @@ jobs:
         id: synopsys-cache
         uses: actions/cache@v2
         with:
-          path: /home/runner/.synopsys
-          key: synopsys-cache-ubuntu
+          path: ~/.synopsys
+          key: synopsys-cache-ubuntu-${{ hashFiles('~/.synopsys/polaris/coverity-analysis-tools/cov_analysis-linux64-*/VERSION') }}
 
       - name: Download and configure Polaris CLI
         run: |
