@@ -9,7 +9,8 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
+    runs-on: [self-hosted, coverity
     
     env:
       POLARIS_URL: ${{ secrets.POLARIS_URL }}
