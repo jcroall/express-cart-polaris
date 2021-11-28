@@ -417,6 +417,7 @@ router.post('/admin/file/upload', restrict, checkAccess, upload.single('upload_f
 
         const source = fs.createReadStream(file.path);
         const dest = fs.createWriteStream(path.join(uploadDir, file.originalname.replace(/ /g, '_')));
+        const dest2 = fs.createWriteStream(path.join(uploadDir, file.originalname.replace(/ /g, '_')));
 
         // save the new file
         source.pipe(dest);
