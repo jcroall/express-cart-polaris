@@ -26,7 +26,13 @@ jobs:
           curl -LsS -o polaris.zip $POLARIS_URL/api/tools/polaris_cli-linux64.zip
           unzip -j -d polaris-cli polaris.zip
           export CI_COMMIT_REF_NAME=$GITHUB_REF
-          ./polaris-cli/polaris --persist-config --co capture.build.buildCommands="null" --co capture.build.   cleanCommands="null" --co capture.fileSystem="null" --co capture.coverity.autoCapture="enable" --co            serverUrl=$POLARIS_URL configure
+          ./polaris-cli/polaris --persist-config \
+            --co capture.build.buildCommands="null" \
+            --co capture.build.cleanCommands="null" \
+            --co capture.fileSystem="null" \
+            --co capture.coverity.autoCapture="enable" \
+            --co serverUrl=$POLARIS_URL \
+            configure
 
       - name: Coverity Scan (Full analysis)
         if: ${{github.event_name == 'push'}}
