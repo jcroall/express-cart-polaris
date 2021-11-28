@@ -63,6 +63,8 @@ jobs:
 
       - name: Export Coverity Results to SARIF (Incremental)
         run: python3 ./synopsys-github-tools/github-export-coverity-issues.py --coverity-json ./.synopsys/polaris/data/coverity/*/idir/incremental-results/incremental-results.json --polaris --comment-on-github-pr --debug 9
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{github.event_name == 'pull_request'}}
 
       - name: Upload SARIF file
